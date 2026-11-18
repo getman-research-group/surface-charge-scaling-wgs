@@ -1,11 +1,10 @@
 """Generate manuscript Figure 2 from the original full-precision pickle.
 
-Run ``python FIGURE_2/MAKE_FIGURE_2.PY`` from the repository root. The PNG and
-PDF are written beside this script. This script does not edit the manuscript.
+Run ``python FIGURE_2/MAKE_FIGURE_2.PY`` from the repository root. The 1200-DPI
+PNG is written beside this script. This script does not edit the manuscript.
 
-The PNG was verified byte-for-byte against manuscript Figure 2 with Python
-3.10.13, NumPy 2.2.6, pandas 2.3.1, and Matplotlib 3.10.3. Its SHA-256 is
-0a5839fb9fdd957caeb3441be3b5f7d49cfdcbf7dda8dd85a93041cbbb9161d9.
+The plotting layout was verified against manuscript Figure 2 with Python
+3.10.13, NumPy 2.2.6, pandas 2.3.1, and Matplotlib 3.10.3.
 """
 
 from pathlib import Path
@@ -21,6 +20,7 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE.parent / "ADSORPTION_TS_ENERGIES.PKL"
+OUTPUT_DPI = 1200
 CHARGES = (-0.11, -0.05, 0.0, 0.05, 0.11)
 COLORS = ("#748eba", "#b4c7e7", "#FFFFFF", "#f8cbad", "#d69163")
 COLOR = dict(zip(CHARGES, COLORS))
@@ -131,8 +131,7 @@ def main():
         fig.text(x + 0.025, 0.025, label,
                  ha="left", va="center", fontsize=14.5)
 
-    fig.savefig(HERE / "FIGURE_2.PDF", bbox_inches="tight")
-    fig.savefig(HERE / "FIGURE_2.PNG", dpi=300, bbox_inches="tight")
+    fig.savefig(HERE / "FIGURE_2.PNG", dpi=OUTPUT_DPI, bbox_inches="tight")
     plt.close(fig)
 
 
