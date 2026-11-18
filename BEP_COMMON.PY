@@ -1,8 +1,8 @@
 """Reaction-energy construction and BEP fitting for the four WGS transitions.
 
-The electronic gas references reproduce the original BEP analysis in
-SR/ts_reaction_energies/calculate.py. Reaction energies follow the forward
-reactions printed in the manuscript: products minus reactants.
+The electronic gas references and reaction-energy directions reproduce the
+original BEP analysis in SR/ts_reaction_energies/calculate.py. HO--H uses the
+reverse water-formation reaction energy, as in the SI BEP equation.
 """
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ TARGET_TEX = {
 
 
 def reaction_energies(frame: pd.DataFrame, target: str) -> np.ndarray:
-    """Compute products minus reactants using adsorption and gas energies."""
+    """Compute the reaction-energy predictor used by the SI BEP equations."""
     reactants, products = REACTIONS[target]
     required = set(reactants + products)
     if frame[list(required)].isna().any().any():
@@ -61,11 +61,14 @@ def reaction_energies(frame: pd.DataFrame, target: str) -> np.ndarray:
         sum(ADSORPTION_REFERENCE_EV[name] for name in products)
         - sum(ADSORPTION_REFERENCE_EV[name] for name in reactants)
     )
-    return (
+    forward_energy = (
         frame[list(products)].sum(axis=1).to_numpy(float)
         - frame[list(reactants)].sum(axis=1).to_numpy(float)
         + gas_offset
     )
+    # The SI fitted HO--H against water dissociation energy, the negative of
+    # the forward water-formation energy shown in the manuscript.
+    return -forward_energy if target == "HO--H" else forward_energy
 
 
 def fit_line(x: np.ndarray, y: np.ndarray) -> tuple[float, float]:

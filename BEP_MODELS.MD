@@ -16,7 +16,8 @@ contains the fitted equation, fit $R^2$, fit RMSE, nested leave-one-metal-out
 (LOMO) RMSE, and observation count. RMSEs are in eV. The scripts require
 Python, NumPy, and pandas. Their shared formulas are in `BEP_COMMON.PY`.
 
-For each forward reaction as written in the manuscript, the predictor is
+For O--CO, H--CO2, and OC--OH, the predictor is the reaction energy for the
+forward reaction as written in the manuscript:
 
 $$
 \Delta E_i^{\mathrm{rxn}}=
@@ -34,10 +35,10 @@ $\Delta E_i^{\mathrm{rxn}}$. Each LOMO fold fits that same linear form using
 the other three metals. For all-charge fitting, it omits every charge state of
 the held-out metal together. No missing transition-state value is imputed.
 
-**HO–H sign correction.** The original `ts_reaction_energies/calculate.py`
-computed its HO–H reaction energy as reactants minus products, opposite to the
-forward water-formation reaction printed in the manuscript. These scripts use
-products minus reactants. The corrected HO–H BEP slope therefore has the
-opposite sign from the old SI equation, while its fitted predictions, $R^2$,
-fit RMSE, and LOMO RMSE are unchanged. The other three equations retain their
-original slope signs.
+**HO–H convention.** To match the SI equation, the HO--H predictor is the
+negative of the forward water-formation reaction energy above. This is the
+water-dissociation direction used in the original BEP analysis. It gives the
+SI slopes of $-0.1636$ for neutral-only fitting and $+0.0440$ for all-charge
+fitting. This direction differs from the forward water-formation reaction
+printed in the main manuscript; reversing the reaction-energy axis changes
+the slope sign but leaves predictions and performance metrics unchanged.
