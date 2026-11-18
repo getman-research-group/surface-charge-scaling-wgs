@@ -1,6 +1,6 @@
 """Generate manuscript Figure 2 from the original full-precision pickle.
 
-Run ``python figures/make_figure_2.py`` from the repository root. The PNG and
+Run ``python FIGURE_2/MAKE_FIGURE_2.PY`` from the repository root. The PNG and
 PDF are written beside this script. This script does not edit the manuscript.
 
 The PNG was verified byte-for-byte against manuscript Figure 2 with Python
@@ -20,7 +20,7 @@ import pandas as pd
 
 
 HERE = Path(__file__).resolve().parent
-DATA = HERE.parent / "adsorption_TS_energies.pkl"
+DATA = HERE.parent / "ADSORPTION_TS_ENERGIES.PKL"
 CHARGES = (-0.11, -0.05, 0.0, 0.05, 0.11)
 COLORS = ("#748eba", "#b4c7e7", "#FFFFFF", "#f8cbad", "#d69163")
 COLOR = dict(zip(CHARGES, COLORS))
@@ -131,8 +131,8 @@ def main():
         fig.text(x + 0.025, 0.025, label,
                  ha="left", va="center", fontsize=14.5)
 
-    fig.savefig(HERE / "fig_02_charge_energies.pdf", bbox_inches="tight")
-    fig.savefig(HERE / "fig_02_charge_energies.png", dpi=300, bbox_inches="tight")
+    fig.savefig(HERE / "FIGURE_2.PDF", bbox_inches="tight")
+    fig.savefig(HERE / "FIGURE_2.PNG", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
 

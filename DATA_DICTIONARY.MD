@@ -1,6 +1,6 @@
 # Energy dataset data dictionary
 
-This document describes `adsorption_TS_energies.pkl` **as stored**. The file is a
+This document describes `ADSORPTION_TS_ENERGIES.PKL` **as stored**. The file is a
 pickled pandas DataFrame with 25 rows and 17 columns: one row for each of five
 metal surfaces at each of five charge states. Its energy values are DFT
 **electronic-energy differences**, in eV, rather than absolute total energies or
