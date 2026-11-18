@@ -2,7 +2,7 @@
 
 The four descriptor adsorption energies use the Pt neutral values from the
 original kinetic inputs. All other adsorption energies and four DFT-studied
-barriers are predicted by the selected nonlinear four-descriptor SRs.
+barriers are predicted by the four-descriptor equations in WGS_SR.JL.
 
 Run from the repository root with
     julia --project=MKM MKM/RUN_NEUTRAL.JL
@@ -82,14 +82,15 @@ X_tol = 1e-10
 function save_result(x_end, X_CO, chunks, max_dtheta_dt)
     tof_s_inv = q * (x_end[3] - Cf_H2) / Nsites
     tof_min_inv = 60.0 * tof_s_inv
+    tof_reported = 600.0 * tof_s_inv
     output = joinpath(@__DIR__, "NEUTRAL_RESULT.CSV")
     open(output, "w") do io
-        println(io, "CHARGE,MODEL,TOF_H2_S_INV,TOF_H2_MIN_INV,X_CO,CHUNKS,MAX_DTHETA_DT_S_INV")
-        @printf(io, "%.1f,SELECTED_NONLINEAR_4D,%.12g,%.12g,%.12g,%d,%.12g\n",
-                CHARGE, tof_s_inv, tof_min_inv, X_CO, chunks, max_dtheta_dt)
+        println(io, "CHARGE,MODEL,TOF_H2_S_INV,TOF_H2_MIN_INV,TOF_H2_REPORTED,X_CO,CHUNKS,MAX_DTHETA_DT_S_INV")
+        @printf(io, "%.1f,ORIGINAL_JULIA_4D,%.12g,%.12g,%.12g,%.12g,%d,%.12g\n",
+                CHARGE, tof_s_inv, tof_min_inv, tof_reported, X_CO, chunks, max_dtheta_dt)
     end
-    @printf("Charge = %.1f; H2 TOF = %.9g s^-1 = %.9g min^-1; CO conversion = %.9g\n",
-            CHARGE, tof_s_inv, tof_min_inv, X_CO)
+    @printf("Charge = %.1f; reported H2 TOF = %.9g; H2 TOF = %.9g s^-1; CO conversion = %.9g\n",
+            CHARGE, tof_reported, tof_s_inv, X_CO)
     println("Saved: ", output)
 end
 
