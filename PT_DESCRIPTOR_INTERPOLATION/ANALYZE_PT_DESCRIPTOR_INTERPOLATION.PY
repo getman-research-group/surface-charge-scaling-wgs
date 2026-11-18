@@ -1,7 +1,7 @@
 """Calculate the Pt descriptor interpolation results used in SI Figure S16.
 
 Run from the repository root:
-    python S16_INTERPOLATION_ANALYSIS/MAKE_S16_ANALYSIS.PY
+    python PT_DESCRIPTOR_INTERPOLATION/ANALYZE_PT_DESCRIPTOR_INTERPOLATION.PY
 
 Writes the nine SI-table metrics and the node/curve values for Figure S16.
 The fourth-degree polynomial through five nodes is the unique fourth-order

@@ -1,7 +1,7 @@
 """Make SI Figure S16 from the saved interpolation analysis.
 
 Run the analysis first:
-    python S16_INTERPOLATION_ANALYSIS/MAKE_S16_ANALYSIS.PY
+    python PT_DESCRIPTOR_INTERPOLATION/ANALYZE_PT_DESCRIPTOR_INTERPOLATION.PY
 Then run this script:
     python FIGURE_S16/MAKE_FIGURE_S16.PY
 The output is FIGURE_S16.PNG at 1200 DPI.
@@ -18,7 +18,7 @@ import pandas as pd
 
 
 HERE = Path(__file__).resolve().parent
-ANALYSIS = HERE.parent / "S16_INTERPOLATION_ANALYSIS"
+ANALYSIS = HERE.parent / "PT_DESCRIPTOR_INTERPOLATION"
 CURVES = ANALYSIS / "INTERPOLATION_CURVES.PKL"
 NODES = ANALYSIS / "INTERPOLATION_NODES.PKL"
 SERIES = (
