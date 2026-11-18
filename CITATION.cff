@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite the associated manuscript. The journal citation and DOI will be added after publication."
+title: "Surface Charge Reshapes Scaling Relationships: From Linear to Nonlinear, Multi-Descriptor Models"
+authors:
+  - family-names: Punyapu
+    given-names: Venkata Rohit
+  - family-names: Hossain
+    given-names: Sifat
+  - family-names: Neurock
+    given-names: Matthew
+  - family-names: Grabow
+    given-names: Lars
+  - family-names: Getman
+    given-names: Rachel B.
+url: "https://github.com/getman-research-group/surface-charge-scaling-wgs"
+repository-code: "https://github.com/getman-research-group/surface-charge-scaling-wgs"

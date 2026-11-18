@@ -1,0 +1,17 @@
+*.PKL binary
+*.pkl binary
+*.PNG binary
+*.png binary
+*.xlsx binary
+*.zip binary
+*.PY text eol=lf
+*.py text eol=lf
+*.JL text eol=lf
+*.jl text eol=lf
+*.CSV text eol=lf
+*.csv text eol=lf
+*.MD text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.cff text eol=lf
+*.toml text eol=lf

@@ -1,0 +1,20 @@
+# Python and Julia local state
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.julia/
+
+# Editor, operating-system, and temporary files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.backup
+
+# Generated run files; the archived manuscript results use .PKL files
+**/RESULTS_*.CSV
+MKM/NEUTRAL_RESULT.CSV
