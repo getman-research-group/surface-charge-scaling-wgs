@@ -9,7 +9,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.ticker import FixedLocator, FormatStrFormatter, MultipleLocator
-from matplotlib.offsetbox import AnnotationBbox, HPacker, TextArea
+from matplotlib.offsetbox import AnnotationBbox, HPacker, TextArea, VPacker
 import numpy as np
 import pandas as pd
 
@@ -36,20 +36,23 @@ def fs(points):
     return points * FONT_SCALE
 ENERGY_SYMBOLS = {
     "H*": r"\Delta E_{\mathrm{H}^{*}}^{\mathrm{ad}}",
-    "OC--OH": r"\Delta E_{\mathrm{OC{-}OH}}^{\mathrm{act}}",
+    "HO--H": r"\Delta E_{\mathrm{HO{-}H}}^{\mathrm{act}}",
 }
 
 
 def colored_equation(expression):
-    pieces = []
-    for token in re.split(r"([xyzw])", expression):
-        if not token:
-            continue
-        math = rf"$\mathbf{{{token}}}$" if token in VARIABLE_COLORS else f"${token}$"
-        pieces.append(TextArea(math, textprops={
-            "fontsize": fs(11.5), "color": VARIABLE_COLORS.get(token, "#202020"),
-            "fontfamily": "DejaVu Sans", "math_fontfamily": "dejavusans"}))
-    return HPacker(children=pieces, align="baseline", pad=0, sep=0.4)
+    lines = []
+    for line in expression.splitlines():
+        pieces = []
+        for token in re.split(r"([xyzw])", line):
+            if not token:
+                continue
+            math = rf"$\mathbf{{{token}}}$" if token in VARIABLE_COLORS else f"${token}$"
+            pieces.append(TextArea(math, textprops={
+                "fontsize": fs(11.5), "color": VARIABLE_COLORS.get(token, "#202020"),
+                "fontfamily": "DejaVu Sans", "math_fontfamily": "dejavusans"}))
+        lines.append(HPacker(children=pieces, align="baseline", pad=0, sep=0.4))
+    return lines[0] if len(lines) == 1 else VPacker(children=lines, align="center", pad=0, sep=0.8)
 
 
 def matched_data():
@@ -91,7 +94,7 @@ def parity_data():
         ROOT / "NONLINEAR_FOUR_DESCRIPTORS/RESULTS_CH_HCO_O_H2O.PKL"
     ).set_index("TARGET")
     frames = []
-    for species in ("H*", "OC--OH"):
+    for species in ("H*", "HO--H"):
         observed = d.loc[d[species].notna() & d[list(DESCRIPTORS)].notna().all(axis=1)]
         model = models.loc[species]
         expr = parse_equation(model.EQUATION, DESCRIPTORS)
@@ -132,8 +135,8 @@ def main():
 
     for j, (species, title, equation) in enumerate([
         ("H*", r"$\mathbf{H}^{*}$", "0.26x+0.77w+0.10xw+1.38"),
-        ("OC--OH", r"$\mathbf{OC{-}OH}$ TS",
-         "-1.36w/y-0.57w+0.26x+2.49"),
+        ("HO--H", r"$\mathbf{HO{-}H}$ TS",
+         "-0.09x/w-0.65z\n-0.22yw+2.00"),
     ]):
         ax = axes[0, j]
         subset = parity.loc[parity.species.eq(species)]
