@@ -56,11 +56,16 @@ LINEAR_TARGETS = (
     "H*", "O*", "OH*", "CO* FCC", "COOH*",
     "HO--H", "O--CO", "H--CO2", "OC--OH",
 )
-NONLINEAR_TARGETS = ("OH*", "CO2*", "COOH*", "H--CO2", "OC--OH")
+NONLINEAR_TARGETS = (
+    "OH*", "CO* FCC", "CO2*", "COOH*",
+    "O--CO", "H--CO2", "OC--OH",
+)
 DISPLAY_NONLINEAR = {
     "OH*": "-0.29x+0.77w+0.73z-3.04",
+    "CO* FCC": "0.08x/w-0.32z\n+0.88y-0.25",
     "CO2*": "-0.17zy-0.06x-0.22",
     "COOH*": "0.44x+0.50z+0.74",
+    "O--CO": "1.55yw+3.45w\n+1.80x+12.84",
     "H--CO2": "-3.18w/y-1.30(z+w)\n+2.24y+5.65",
     "OC--OH": "-1.36w/y-0.57w+0.26x+2.49",
 }
@@ -262,9 +267,10 @@ def plot_s23():
     fig = plt.figure(figsize=(13.0, 8.0), facecolor="white")
     colors = legends(fig, descriptors, top_metal=0.980, top_charge=0.940,
                      descriptor_y=0.887, metal_label_x=0.065)
-    width, height = 0.190, 0.310
-    positions = ((0.100, 0.530), (0.405, 0.530), (0.710, 0.530),
-                 (0.252, 0.105), (0.557, 0.105))
+    width, height = 0.170, 0.310
+    positions = ((0.075, 0.530), (0.305, 0.530), (0.535, 0.530),
+                 (0.765, 0.530), (0.180, 0.105), (0.415, 0.105),
+                 (0.650, 0.105))
     for index, (target, (left, bottom)) in enumerate(zip(NONLINEAR_TARGETS, positions)):
         ax = fig.add_axes([left, bottom, width, height])
         sub = cases[target]
