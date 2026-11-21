@@ -52,6 +52,7 @@ class Spec:
     metals: tuple[str, ...]
     anchor: str
     angle_label: str | None = None
+    label_decimals: int | None = None
 
 
 SPECS = [
@@ -64,7 +65,8 @@ SPECS = [
     Spec(7, "o", r"O$^*$", "O", ("Pt", "Cu", "Ni", "Au"), "O"),
     Spec(8, "ch", r"CH$^*$", "CH", ("Pt", "Cu", "Ru", "Ni", "Au"), "C", r"$\angle M\!\!\!-C-H$"),
     Spec(9, "cooh", r"COOH$^*$", "COOH", ("Pt", "Cu", "Ru", "Ni", "Au"), "C", r"$\angle M\!\!\!-C-O$"),
-    Spec(10, "h_co2_ts", "H--CO$_2$ TS", "H_CO2", ("Pt", "Cu", "Ni", "Au"), "C", r"$\angle M\!\!\!-C-O$"),
+    Spec(10, "h_co2_ts", "H--CO$_2$ TS", "H_CO2", ("Pt", "Cu", "Ni", "Au"), "C",
+         r"$\angle M\!\!\!-C-O$", label_decimals=2),
     Spec(11, "o_co_ts", "O--CO TS", "O_CO", ("Pt", "Cu", "Ni", "Au"), "C", r"$\angle M\!\!\!-C-O$"),
     Spec(12, "ho_h_ts", "HO--H TS", "HO_H", ("Cu", "Ni", "Au"), "O", r"$\angle M\!\!\!-O-H$"),
     Spec(13, "oc_oh_ts", "OC--OH TS", "OC_OH", ("Cu", "Ni", "Au"), "O", r"$\angle M\!\!\!-O-H$"),
@@ -283,17 +285,26 @@ def draw_one(spec: Spec, measurements, output_path: Path):
             for spine in ax.spines.values():
                 spine.set_edgecolor("#444444")
                 spine.set_linewidth(0.72)
-            ratio = physical_ratio(ax) * (1 - 0.09)
-            surface(ax, metal, ratio)
-            anchor_x = 0.55 if spec.key != "OC_OH" else 0.66
-            anchor_y = main_atom_y(float(ds[row]))
-            draw_molecule(ax, spec, (anchor_x, anchor_y), angles[row], ratio)
-            distance_annotation(ax, anchor_x if spec.key != "OC_OH" else anchor_x - 0.11,
-                                anchor_y, spec.anchor, ds[row], metal, row)
-            angle_annotation(ax, angles[row], row)
             ax.text(0.025, 0.975, f"({chr(97 + col * 3 + row)})",
                     transform=ax.transAxes, va="top", ha="left",
                     fontsize=13.5, color="#111111", zorder=10)
+            distance, angle = ds[row], angles[row]
+            if not distance:
+                ax.text(0.5, 0.5, "No saddle point", transform=ax.transAxes,
+                        ha="center", va="center", fontsize=13.5, color="#555555")
+                continue
+            ratio = physical_ratio(ax) * (1 - 0.09)
+            surface(ax, metal, ratio)
+            anchor_x = 0.55 if spec.key != "OC_OH" else 0.66
+            anchor_y = main_atom_y(float(distance))
+            draw_molecule(ax, spec, (anchor_x, anchor_y), angle, ratio)
+            if spec.label_decimals is not None:
+                distance = f"{float(distance):.{spec.label_decimals}f}"
+                if angle is not None:
+                    angle = f"{float(angle):.{spec.label_decimals}f}"
+            distance_annotation(ax, anchor_x if spec.key != "OC_OH" else anchor_x - 0.11,
+                                anchor_y, spec.anchor, distance, metal, row)
+            angle_annotation(ax, angle, row)
             if row == 0 and spec.angle_label:
                 ax.text(0.98, 0.97, spec.angle_label,
                         transform=ax.transAxes, va="top", ha="right",
