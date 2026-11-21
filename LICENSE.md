@@ -12,4 +12,4 @@ Unless a file states otherwise, datasets, generated figures, geometry measuremen
 
 ## Citation
 
-Please cite the associated manuscript when using the data or code. The manuscript title and authors are listed in [CITATION.cff](CITATION.cff). Its journal citation and DOI will be added after publication.
+Please cite the [Zenodo repository record](https://doi.org/10.5281/zenodo.24410450) when using the data or code. The repository creators are listed in [CITATION.cff](CITATION.cff). The associated manuscript should be cited separately when published.

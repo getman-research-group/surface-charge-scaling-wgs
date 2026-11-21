@@ -76,6 +76,6 @@ The figure and analysis scripts were checked with Python 3.10.13, NumPy 2.2.6, p
 
 ## Citation and license
 
-Please cite the associated manuscript when using this repository. Its title and authors are listed in [CITATION.cff](CITATION.cff); journal details and DOI can be added when available. Questions about the manuscript or data can be sent to the corresponding author, Rachel B. Getman, at getman.11@osu.edu.
+Please cite the [Zenodo repository record](https://doi.org/10.5281/zenodo.24410450) when using this code or data. The repository creators are Sifat Hossain and Rachel B. Getman, as listed in [CITATION.cff](CITATION.cff). The associated manuscript has the five authors listed above and should be cited separately when published. Questions about the manuscript or data can be sent to the corresponding author, Rachel B. Getman, at getman.11@osu.edu.
 
 Code is licensed under MIT. Data, figures, and documentation are licensed under CC BY 4.0. See [LICENSE.md](LICENSE.md) for the scope of each license.
